@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "types": [
+      "jest",
+      "node"
+    ]
+  },
+  "include": [
+    "client/src/**/*",
+    "shared/**/*",
+    "server/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}
