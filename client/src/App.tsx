@@ -8,20 +8,25 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute, AdminRoute } from "@/lib/protected-route";
 import NotFound from "@/pages/not-found";
 import LandingPage from "@/pages/landing-page";
-import AuthPage from "@/pages/auth-page";
 import UserDashboard from "@/pages/user-dashboard";
 import AdminDashboard from "@/pages/admin-dashboard";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={LandingPage} />
+
       <Route path="/login">
-        <AuthPage mode="login" />
+        <LoginPage />
       </Route>
+
       <Route path="/register">
-        <AuthPage mode="register" />
+        <RegisterPage />
       </Route>
+
+
 
       {/* User Dashboard Routes */}
       <ProtectedRoute path="/portfolio" component={UserDashboard} />
