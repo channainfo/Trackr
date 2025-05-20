@@ -1,0 +1,51 @@
+name: Test and Build
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: your-database
+        ports:
+          - 5432:5432
+
+    env:
+      # Set the DATABASE_URL environment variable for the job
+      NODE_ENV: test
+      DATABASE_URL: postgres://user:password@localhost:5432/your-database
+      DATABASE_URL_TEST: postgres://user:password@localhost:5432/your-database
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js 22.10.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22.10.0'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm run db:push:test && npm run test
+
+    # - name: Build the project
+    #   run: npm run build
+
+    # - name: Start the project
+    #   run: npm run start
