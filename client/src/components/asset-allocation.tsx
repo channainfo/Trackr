@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface AssetData {
   name: string;
@@ -32,15 +32,15 @@ export default function AssetAllocation({ assets }: AssetAllocationProps) {
     assets.forEach(asset => {
       const sliceAngle = (asset.percentage / 100) * 2 * Math.PI;
       const endAngle = startAngle + sliceAngle;
-      
+
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
       ctx.arc(centerX, centerY, radius, startAngle, endAngle);
       ctx.closePath();
-      
+
       ctx.fillStyle = asset.color;
       ctx.fill();
-      
+
       startAngle = endAngle;
     });
 
@@ -86,8 +86,8 @@ export default function AssetAllocation({ assets }: AssetAllocationProps) {
             {assets.map((asset, index) => (
               <div key={index} className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2" 
+                  <div
+                    className="w-3 h-3 rounded-full mr-2"
                     style={{ backgroundColor: asset.color }}
                   />
                   <span className="text-sm">{asset.name} ({asset.symbol})</span>

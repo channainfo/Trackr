@@ -1,5 +1,5 @@
 // components/shared/AuthHeader.tsx
-import { Wallet } from "lucide-react";
+import { Wallet } from 'lucide-react';
 
 export default function AuthHeader() {
   return (

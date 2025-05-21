@@ -1,51 +1,49 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Wallet, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useEffect } from 'react';
+import { useLocation } from 'wouter';
+import { useAuth } from '@/hooks/use-auth';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ArrowLeft } from 'lucide-react';
 
-import { usePasswordStrength } from "@/hooks/use-password-strength";
-import AuthHeader from "@/components/shared/AuthHeader";
-import { PasswordStrengthIndicator } from "@/components/auth/PasswordStrengthIndicator";
-import { PasswordInput } from "@/components/auth/PasswordInput";
+import { usePasswordStrength } from '@/hooks/use-password-strength';
+import AuthHeader from '@/components/shared/AuthHeader';
+import { PasswordStrengthIndicator } from '@/components/auth/PasswordStrengthIndicator';
+import { PasswordInput } from '@/components/auth/PasswordInput';
 
 const registerSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  email: z.string().email("Invalid email address"),
+  username: z.string().min(3, 'Username must be at least 3 characters'),
+  email: z.string().email('Invalid email address'),
   password: z.string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain an uppercase letter")
-    .regex(/[0-9]/, "Password must contain a number")
-    .regex(/[^A-Za-z0-9]/, "Password must contain a special character"),
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain an uppercase letter')
+    .regex(/[0-9]/, 'Password must contain a number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain a special character'),
   confirmPassword: z.string(),
   termsAccepted: z.boolean().refine((val) => val === true, {
-    message: "You must accept the terms and conditions",
+    message: 'You must accept the terms and conditions',
   }),
-  themePreference: z.string().default("dark"),
+  themePreference: z.string().default('dark'),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
-  path: ["confirmPassword"],
+  path: ['confirmPassword'],
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
   const { user, registerMutation } = useAuth();
-  const [, navigate] = useLocation();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [_, navigate] = useLocation();
 
   // If user is already logged in, redirect to home
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user, navigate]);
 
@@ -53,17 +51,17 @@ export default function RegisterPage() {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       termsAccepted: false,
-      themePreference: "dark",
+      themePreference: 'dark',
     },
   });
 
   // Calculate password strength
-  const password = form.watch("password");
+  const password = form.watch('password');
   const passwordStrength = usePasswordStrength(password);
 
   const onSubmit = (data: RegisterFormValues) => {
@@ -176,11 +174,11 @@ export default function RegisterPage() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-sm">
-                            I agree to the{" "}
+                            I agree to the{' '}
                             <Button variant="link" className="p-0 h-auto" type="button">
                               Terms of Service
-                            </Button>{" "}
-                            and{" "}
+                            </Button>{' '}
+                            and{' '}
                             <Button variant="link" className="p-0 h-auto" type="button">
                               Privacy Policy
                             </Button>
@@ -196,17 +194,17 @@ export default function RegisterPage() {
                     className="w-full"
                     disabled={registerMutation.isPending}
                   >
-                    {registerMutation.isPending ? "Creating account..." : "Create account"}
+                    {registerMutation.isPending ? 'Creating account...' : 'Create account'}
                   </Button>
 
                   <div className="text-center mt-6">
                     <p className="text-sm text-muted-foreground">
-                      Already have an account?{" "}
+                      Already have an account?{' '}
                       <Button
                         variant="link"
                         className="p-0"
                         type="button"
-                        onClick={() => navigate("/login")}
+                        onClick={() => navigate('/login')}
                       >
                         Sign in
                       </Button>
@@ -222,7 +220,7 @@ export default function RegisterPage() {
               variant="ghost"
               size="sm"
               className="flex items-center mx-auto"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to home

@@ -1,7 +1,7 @@
-import { db } from "../db";
-import { portfolioAssetsTable, cryptoAssetsTable } from "@shared/schema";
-import { InsertPortfolioAsset, PortfolioAsset, CryptoAsset } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { db } from '../db';
+import { portfolioAssetsTable, cryptoAssetsTable } from '@shared/schema';
+import { InsertPortfolioAsset, PortfolioAsset, CryptoAsset } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
 export class PortfolioAssetStorage {
   async getPortfolioAssets(portfolioId: number): Promise<(PortfolioAsset & { asset: CryptoAsset })[]> {
@@ -13,7 +13,7 @@ export class PortfolioAssetStorage {
 
     return result.map(row => ({
       ...row.portfolio_assets,
-      asset: row.crypto_assets
+      asset: row.crypto_assets,
     }));
   }
 

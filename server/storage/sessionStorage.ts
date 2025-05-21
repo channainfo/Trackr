@@ -1,7 +1,7 @@
-import session from "express-session";
-import createMemoryStore from "memorystore";
-import connectPg from "connect-pg-simple";
-import { pool } from "../db";
+import session from 'express-session';
+import createMemoryStore from 'memorystore';
+import connectPg from 'connect-pg-simple';
+import { pool } from '../db';
 
 const MemoryStore = createMemoryStore(session);
 const PostgresSessionStore = connectPg(session);

@@ -1,70 +1,69 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2, Users, Wallet, PieChart, UserPlus, ArrowUp, ArrowDown } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from '@tanstack/react-query';
+import { Loader2, Users, Wallet, PieChart, UserPlus, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function AdminOverview() {
   // Query for admin dashboard stats
   const { data: users, isLoading: isLoadingUsers } = useQuery({
-    queryKey: ["/api/admin/users"],
+    queryKey: ['/api/admin/users'],
   });
 
   // Query for activity logs
   const { data: activityLogs, isLoading: isLoadingLogs } = useQuery({
-    queryKey: ["/api/admin/logs"],
+    queryKey: ['/api/admin/logs'],
   });
 
   // Calculate some stats from users
   const totalUsers = users?.length || 0;
   const activeUsers = users?.filter(user => !user.isAdmin).length || 0;
-  const adminUsers = users?.filter(user => user.isAdmin).length || 0;
-  
+
   // Get recent activity
   const recentActivity = activityLogs?.slice(0, 5) || [];
 
   // Random stats for demonstration
   const statsCards = [
     {
-      title: "Total Users",
+      title: 'Total Users',
       value: totalUsers,
-      description: "+12% from last month",
+      description: '+12% from last month',
       icon: <Users className="h-8 w-8" />,
-      iconClass: "text-indigo-500 bg-indigo-500/10",
-      trend: "up",
+      iconClass: 'text-indigo-500 bg-indigo-500/10',
+      trend: 'up',
     },
     {
-      title: "Active Portfolios",
+      title: 'Active Portfolios',
       value: activeUsers,
-      description: "+8% from last month",
+      description: '+8% from last month',
       icon: <Wallet className="h-8 w-8" />,
-      iconClass: "text-green-500 bg-green-500/10",
-      trend: "up",
+      iconClass: 'text-green-500 bg-green-500/10',
+      trend: 'up',
     },
     {
-      title: "Tracked Assets",
-      value: "12,584",
-      description: "+23% from last month",
+      title: 'Tracked Assets',
+      value: '12,584',
+      description: '+23% from last month',
       icon: <PieChart className="h-8 w-8" />,
-      iconClass: "text-blue-500 bg-blue-500/10",
-      trend: "up",
+      iconClass: 'text-blue-500 bg-blue-500/10',
+      trend: 'up',
     },
     {
-      title: "New Sign Ups",
-      value: "137",
-      description: "-3% from last month",
+      title: 'New Sign Ups',
+      value: '137',
+      description: '-3% from last month',
       icon: <UserPlus className="h-8 w-8" />,
-      iconClass: "text-purple-500 bg-purple-500/10",
-      trend: "down",
+      iconClass: 'text-purple-500 bg-purple-500/10',
+      trend: 'down',
     },
   ];
 
   // User growth data (would come from API)
   const monthlyGrowth = [
-    { month: "Jan", users: 120 },
-    { month: "Feb", users: 150 },
-    { month: "Mar", users: 180 },
-    { month: "Apr", users: 170 },
-    { month: "May", users: 210 },
-    { month: "Jun", users: 250 },
+    { month: 'Jan', users: 120 },
+    { month: 'Feb', users: 150 },
+    { month: 'Mar', users: 180 },
+    { month: 'Apr', users: 170 },
+    { month: 'May', users: 210 },
+    { month: 'Jun', users: 250 },
   ];
 
   // Find the maximum value for scaling
@@ -78,20 +77,20 @@ export default function AdminOverview() {
 
   // Get icon and class for activity types
   function getActivityIcon(action: string) {
-    if (action === "user_registered") {
+    if (action === 'user_registered') {
       return {
         icon: <UserPlus className="h-4 w-4" />,
-        className: "bg-green-500/20 text-green-500",
+        className: 'bg-green-500/20 text-green-500',
       };
-    } else if (action.includes("login")) {
+    } else if (action.includes('login')) {
       return {
         icon: <Users className="h-4 w-4" />,
-        className: "bg-blue-500/20 text-blue-500",
+        className: 'bg-blue-500/20 text-blue-500',
       };
     } else {
       return {
         icon: <Wallet className="h-4 w-4" />,
-        className: "bg-indigo-500/20 text-indigo-500",
+        className: 'bg-indigo-500/20 text-indigo-500',
       };
     }
   }
@@ -123,12 +122,12 @@ export default function AdminOverview() {
                 </div>
               </div>
               <div className="text-xs flex items-center">
-                {stat.trend === "up" ? (
+                {stat.trend === 'up' ? (
                   <ArrowUp className="h-3 w-3 mr-1 text-green-500" />
                 ) : (
                   <ArrowDown className="h-3 w-3 mr-1 text-red-500" />
                 )}
-                <span className={stat.trend === "up" ? "text-green-500" : "text-red-500"}>
+                <span className={stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}>
                   {stat.description}
                 </span>
               </div>
@@ -147,8 +146,8 @@ export default function AdminOverview() {
           <div className="h-64 flex items-end justify-between px-2">
             {monthlyGrowth.map((data, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div 
-                  className="bg-primary w-12 rounded-t-sm transition-all duration-500 ease-in-out" 
+                <div
+                  className="bg-primary w-12 rounded-t-sm transition-all duration-500 ease-in-out"
                   style={{ height: `${(data.users / maxUsers) * 100}%` }}
                 ></div>
                 <div className="text-xs mt-2 text-muted-foreground">{data.month}</div>

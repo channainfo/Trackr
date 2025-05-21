@@ -1,5 +1,5 @@
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { Progress } from '@/components/ui/progress';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 interface PasswordStrengthIndicatorProps {
   password: string;
@@ -11,19 +11,19 @@ export function PasswordStrengthIndicator({
   passwordStrength,
 }: PasswordStrengthIndicatorProps) {
   const getStrengthColor = () => {
-    if (passwordStrength === 0) return "bg-muted";
-    if (passwordStrength === 1) return "bg-destructive";
-    if (passwordStrength === 2) return "bg-amber-500";
-    if (passwordStrength === 3) return "bg-blue-500";
-    return "bg-green-500";
+    if (passwordStrength === 0) return 'bg-muted';
+    if (passwordStrength === 1) return 'bg-destructive';
+    if (passwordStrength === 2) return 'bg-amber-500';
+    if (passwordStrength === 3) return 'bg-blue-500';
+    return 'bg-green-500';
   };
 
   const getStrengthText = () => {
-    if (passwordStrength === 0) return "Password strength";
-    if (passwordStrength === 1) return "Weak";
-    if (passwordStrength === 2) return "Fair";
-    if (passwordStrength === 3) return "Good";
-    return "Strong";
+    if (passwordStrength === 0) return 'Password strength';
+    if (passwordStrength === 1) return 'Weak';
+    if (passwordStrength === 2) return 'Fair';
+    if (passwordStrength === 3) return 'Good';
+    return 'Strong';
   };
 
   return (
@@ -43,7 +43,7 @@ export function PasswordStrengthIndicator({
             ) : (
               <XCircle className="mr-1 h-3 w-3 text-muted-foreground" />
             )}
-            <span className={/[A-Z]/.test(password) ? "text-green-500" : "text-muted-foreground"}>
+            <span className={/[A-Z]/.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
               Uppercase letter
             </span>
           </div>
@@ -53,7 +53,7 @@ export function PasswordStrengthIndicator({
             ) : (
               <XCircle className="mr-1 h-3 w-3 text-muted-foreground" />
             )}
-            <span className={/[0-9]/.test(password) ? "text-green-500" : "text-muted-foreground"}>
+            <span className={/[0-9]/.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
               Number
             </span>
           </div>
@@ -63,7 +63,7 @@ export function PasswordStrengthIndicator({
             ) : (
               <XCircle className="mr-1 h-3 w-3 text-muted-foreground" />
             )}
-            <span className={password.length >= 8 ? "text-green-500" : "text-muted-foreground"}>
+            <span className={password.length >= 8 ? 'text-green-500' : 'text-muted-foreground'}>
               Min. 8 characters
             </span>
           </div>
@@ -73,7 +73,7 @@ export function PasswordStrengthIndicator({
             ) : (
               <XCircle className="mr-1 h-3 w-3 text-muted-foreground" />
             )}
-            <span className={/[^A-Za-z0-9]/.test(password) ? "text-green-500" : "text-muted-foreground"}>
+            <span className={/[^A-Za-z0-9]/.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
               Special character
             </span>
           </div>

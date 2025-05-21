@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface PasswordInputProps {
   placeholder: string;
@@ -23,7 +23,7 @@ export function PasswordInput({
   return (
     <div className="relative">
       <Input
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

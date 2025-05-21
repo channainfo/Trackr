@@ -1,7 +1,7 @@
-import { db } from "../db";
-import { usersTable } from "@shared/schema";
-import { InsertUser, User } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { db } from '../db';
+import { usersTable } from '@shared/schema';
+import { InsertUser, User } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
 
 export class UserStorage {

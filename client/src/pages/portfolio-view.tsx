@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/use-auth";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Loader2, Plus, ArrowUp, ArrowDown, Download } from "lucide-react";
-import PortfolioSummary from "@/components/portfolio-summary";
-import AssetAllocation from "@/components/asset-allocation";
-import CryptoCard from "@/components/crypto-card";
-import { formatCurrency } from "@/lib/utils";
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/use-auth';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import { Loader2, Plus } from 'lucide-react';
+import PortfolioSummary from '@/components/portfolio-summary';
+import AssetAllocation from '@/components/asset-allocation';
+import CryptoCard from '@/components/crypto-card';
 
 // Form schema for adding a new asset
 const addAssetSchema = z.object({
-  assetId: z.string().min(1, { message: "Please select an asset" }),
-  amount: z.string().min(1, { message: "Please enter an amount" }),
+  assetId: z.string().min(1, { message: 'Please select an asset' }),
+  amount: z.string().min(1, { message: 'Please enter an amount' }),
   purchasePrice: z.string().optional(),
 });
 
@@ -31,7 +30,7 @@ export default function PortfolioView() {
 
   // Query for user portfolios
   const { data: portfolios, isLoading: isLoadingPortfolios } = useQuery({
-    queryKey: ["/api/portfolios"],
+    queryKey: ['/api/portfolios'],
     enabled: !!user,
   });
 
@@ -40,22 +39,22 @@ export default function PortfolioView() {
 
   // Query for portfolio assets
   const { data: portfolioAssets, isLoading: isLoadingAssets } = useQuery({
-    queryKey: ["/api/portfolios", defaultPortfolio?.id, "assets"],
+    queryKey: ['/api/portfolios', defaultPortfolio?.id, 'assets'],
     enabled: !!defaultPortfolio,
   });
 
   // Query for available crypto assets
   const { data: cryptoAssets, isLoading: isLoadingCryptoAssets } = useQuery({
-    queryKey: ["/api/assets"],
+    queryKey: ['/api/assets'],
   });
 
   // Form for adding new assets
   const form = useForm<AddAssetFormValues>({
     resolver: zodResolver(addAssetSchema),
     defaultValues: {
-      assetId: "",
-      amount: "",
-      purchasePrice: "",
+      assetId: '',
+      amount: '',
+      purchasePrice: '',
     },
   });
 
@@ -68,27 +67,27 @@ export default function PortfolioView() {
   // Prepare the asset allocation data
   const assetAllocationData = portfolioAssets
     ? portfolioAssets.map((asset, index) => {
-        // Calculate value and percentage for each asset
-        const value = parseFloat(asset.amount) * 1000; // This would be calculated with real price data
-        const percentage = (value / mockTotalBalance) * 100;
+      // Calculate value and percentage for each asset
+      const value = parseFloat(asset.amount) * 1000; // This would be calculated with real price data
+      const percentage = (value / mockTotalBalance) * 100;
 
-        // List of colors for the chart
-        const colors = [
-          "hsl(var(--chart-1))",
-          "hsl(var(--chart-2))",
-          "hsl(var(--chart-3))",
-          "hsl(var(--chart-4))",
-          "hsl(var(--chart-5))",
-        ];
+      // List of colors for the chart
+      const colors = [
+        'hsl(var(--chart-1))',
+        'hsl(var(--chart-2))',
+        'hsl(var(--chart-3))',
+        'hsl(var(--chart-4))',
+        'hsl(var(--chart-5))',
+      ];
 
-        return {
-          name: asset.asset.name,
-          symbol: asset.asset.symbol,
-          value: value,
-          color: colors[index % colors.length],
-          percentage: percentage,
-        };
-      })
+      return {
+        name: asset.asset.name,
+        symbol: asset.asset.symbol,
+        value: value,
+        color: colors[index % colors.length],
+        percentage: percentage,
+      };
+    })
     : [];
 
   // Handle adding a new asset
@@ -96,25 +95,25 @@ export default function PortfolioView() {
     if (!defaultPortfolio) return;
 
     try {
-      await apiRequest("POST", `/api/portfolios/${defaultPortfolio.id}/assets`, {
+      await apiRequest('POST', `/api/portfolios/${defaultPortfolio.id}/assets`, {
         assetId: parseInt(values.assetId),
         amount: values.amount,
         purchasePrice: values.purchasePrice || undefined,
       });
 
       // Invalidate the portfolio assets query to refresh the data
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolios", defaultPortfolio.id, "assets"] });
+      queryClient.invalidateQueries({ queryKey: ['/api/portfolios', defaultPortfolio.id, 'assets'] });
       setIsAddAssetOpen(false);
       form.reset();
     } catch (error) {
-      console.error("Failed to add asset:", error);
+      console.error('Failed to add asset:', error);
     }
   };
 
   // Handle export portfolio
   const handleExportPortfolio = () => {
     // This would export the portfolio data to CSV/PDF
-    alert("Export feature would be implemented here");
+    alert('Export feature would be implemented here');
   };
 
   if (isLoadingPortfolios || (!defaultPortfolio && !isLoadingPortfolios)) {
@@ -219,8 +218,8 @@ export default function PortfolioView() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Asset</FormLabel>
-                    <Select 
-                      onValueChange={field.onChange} 
+                    <Select
+                      onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
@@ -254,9 +253,9 @@ export default function PortfolioView() {
                   <FormItem>
                     <FormLabel>Amount</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="0.00" 
-                        {...field} 
+                      <Input
+                        placeholder="0.00"
+                        {...field}
                         type="number"
                         step="any"
                       />
@@ -273,9 +272,9 @@ export default function PortfolioView() {
                   <FormItem>
                     <FormLabel>Purchase Price (optional)</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="0.00" 
-                        {...field} 
+                      <Input
+                        placeholder="0.00"
+                        {...field}
                         type="number"
                         step="any"
                       />
@@ -286,9 +285,9 @@ export default function PortfolioView() {
               />
 
               <div className="flex justify-end space-x-2 pt-4">
-                <Button 
-                  variant="outline" 
-                  type="button" 
+                <Button
+                  variant="outline"
+                  type="button"
                   onClick={() => setIsAddAssetOpen(false)}
                 >
                   Cancel

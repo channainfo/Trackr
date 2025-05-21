@@ -1,20 +1,20 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function formatCurrency(amount: number | string, currency = 'USD'): string {
   if (typeof amount === 'string') {
     amount = parseFloat(amount);
   }
-  
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(amount);
 }
 
@@ -22,10 +22,10 @@ export function formatCryptoAmount(amount: number | string, symbol: string): str
   if (typeof amount === 'string') {
     amount = parseFloat(amount);
   }
-  
+
   // Format with appropriate precision based on crypto type
   let precision = 8; // Default for most cryptos
-  
+
   if (symbol === 'BTC') {
     precision = 8;
   } else if (symbol === 'ETH') {
@@ -33,7 +33,7 @@ export function formatCryptoAmount(amount: number | string, symbol: string): str
   } else if (['ADA', 'XRP', 'DOT'].includes(symbol)) {
     precision = 4;
   }
-  
+
   return `${parseFloat(amount.toFixed(precision))} ${symbol}`;
 }
 
@@ -57,7 +57,7 @@ export function delay(ms: number): Promise<void> {
 
 export function getInitials(name: string): string {
   if (!name) return '';
-  
+
   return name
     .split(' ')
     .map(part => part.charAt(0))

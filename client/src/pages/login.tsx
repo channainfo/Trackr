@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, ArrowLeft } from "lucide-react";
-import AuthHeader from "@/components/shared/AuthHeader";
-import { PasswordInput } from "@/components/auth/PasswordInput";
+import { useEffect } from 'react';
+import { useLocation } from 'wouter';
+import { useAuth } from '@/hooks/use-auth';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ArrowLeft } from 'lucide-react';
+import AuthHeader from '@/components/shared/AuthHeader';
+import { PasswordInput } from '@/components/auth/PasswordInput';
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
+  username: z.string().min(1, 'Username is required'),
+  password: z.string().min(1, 'Password is required'),
   rememberMe: z.boolean().optional(),
 });
 
@@ -24,12 +24,11 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const { user, loginMutation } = useAuth();
   const [, navigate] = useLocation();
-  const [showPassword, setShowPassword] = useState(false);
 
   // If user is already logged in, redirect to home
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user, navigate]);
 
@@ -37,8 +36,8 @@ export default function LoginPage() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       rememberMe: false,
     },
   });
@@ -128,17 +127,17 @@ export default function LoginPage() {
                     className="w-full"
                     disabled={loginMutation.isPending}
                   >
-                    {loginMutation.isPending ? "Signing in..." : "Sign in"}
+                    {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
                   </Button>
 
                   <div className="text-center mt-6">
                     <p className="text-sm text-muted-foreground">
-                      Don't have an account?{" "}
+                      Don't have an account?{' '}
                       <Button
                         variant="link"
                         className="p-0"
                         type="button"
-                        onClick={() => navigate("/register")}
+                        onClick={() => navigate('/register')}
                       >
                         Create an account
                       </Button>
@@ -154,7 +153,7 @@ export default function LoginPage() {
               variant="ghost"
               size="sm"
               className="flex items-center mx-auto"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to home

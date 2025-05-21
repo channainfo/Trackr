@@ -1,7 +1,7 @@
-import { db } from "../db";
-import { activityLogsTable } from "@shared/schema";
-import { ActivityLog } from "@shared/schema";
-import { desc } from "drizzle-orm";
+import { db } from '../db';
+import { activityLogsTable } from '@shared/schema';
+import { ActivityLog } from '@shared/schema';
+import { desc } from 'drizzle-orm';
 
 export class ActivityLogStorage {
   async getActivityLogs(): Promise<ActivityLog[]> {
