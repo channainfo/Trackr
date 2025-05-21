@@ -1,8 +1,8 @@
-import { useLocation } from "wouter";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
-import { LayoutDashboard, Users, Settings, FileText, LogOut } from "lucide-react";
+import { useLocation } from 'wouter';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/use-auth';
+import { LayoutDashboard, Users, Settings, FileText, LogOut } from 'lucide-react';
 
 interface SidebarProps {
   className?: string;
@@ -14,33 +14,33 @@ export default function Sidebar({ className }: SidebarProps) {
 
   const menuItems = [
     {
-      title: "Overview",
+      title: 'Overview',
       icon: <LayoutDashboard className="mr-2 h-4 w-4" />,
-      href: "/admin",
-      active: location === "/admin",
+      href: '/admin',
+      active: location === '/admin',
     },
     {
-      title: "User Management",
+      title: 'User Management',
       icon: <Users className="mr-2 h-4 w-4" />,
-      href: "/admin/users",
-      active: location === "/admin/users",
+      href: '/admin/users',
+      active: location === '/admin/users',
     },
     {
-      title: "System Settings",
+      title: 'System Settings',
       icon: <Settings className="mr-2 h-4 w-4" />,
-      href: "/admin/settings",
-      active: location === "/admin/settings",
+      href: '/admin/settings',
+      active: location === '/admin/settings',
     },
     {
-      title: "Activity Logs",
+      title: 'Activity Logs',
       icon: <FileText className="mr-2 h-4 w-4" />,
-      href: "/admin/logs",
-      active: location === "/admin/logs",
+      href: '/admin/logs',
+      active: location === '/admin/logs',
     },
   ];
 
   return (
-    <div className={cn("pb-12 w-64 border-r hidden md:block", className)}>
+    <div className={cn('pb-12 w-64 border-r hidden md:block', className)}>
       <div className="space-y-4 py-4">
         <div className="px-4 py-2 flex items-center border-b mb-4">
           <svg
@@ -66,12 +66,12 @@ export default function Sidebar({ className }: SidebarProps) {
             {menuItems.map((item) => (
               <Button
                 key={item.href}
-                variant={item.active ? "secondary" : "ghost"}
+                variant={item.active ? 'secondary' : 'ghost'}
                 size="sm"
                 onClick={() => navigate(item.href)}
                 className={cn(
-                  "w-full justify-start",
-                  item.active && "bg-primary/10 text-primary hover:bg-primary/20"
+                  'w-full justify-start',
+                  item.active && 'bg-primary/10 text-primary hover:bg-primary/20',
                 )}
               >
                 {item.icon}

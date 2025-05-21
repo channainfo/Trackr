@@ -1,44 +1,43 @@
-import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Switch } from "@/components/ui/switch";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { Search, Plus, Edit, Trash2, Shield, Ban, Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Switch } from '@/components/ui/switch';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import { useToast } from '@/hooks/use-toast';
+import { Search, Plus, Edit, Trash2, Loader2 } from 'lucide-react';
 
 // Form schema for creating/editing users
 const userFormSchema = z.object({
-  username: z.string().min(3, { message: "Username must be at least 3 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters." })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
-    .regex(/[0-9]/, { message: "Password must contain at least one number." })
-    .regex(/[^A-Za-z0-9]/, { message: "Password must contain at least one special character." }),
+  username: z.string().min(3, { message: 'Username must be at least 3 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters.' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
+    .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+    .regex(/[^A-Za-z0-9]/, { message: 'Password must contain at least one special character.' }),
   confirmPassword: z.string(),
   isAdmin: z.boolean().default(false),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match.",
-  path: ["confirmPassword"],
+  message: 'Passwords do not match.',
+  path: ['confirmPassword'],
 });
 
 type UserFormValues = z.infer<typeof userFormSchema>;
 
 export default function AdminUsers() {
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [roleFilter, setRoleFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [roleFilter, setRoleFilter] = useState('all');
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<any>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<any>(null);
 
@@ -46,10 +45,10 @@ export default function AdminUsers() {
   const form = useForm<UserFormValues>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       isAdmin: false,
     },
   });
@@ -57,37 +56,37 @@ export default function AdminUsers() {
   // Reset form when dialog closes
   const resetForm = () => {
     form.reset({
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       isAdmin: false,
     });
   };
 
   // Query for users
   const { data: users, isLoading: isLoadingUsers } = useQuery({
-    queryKey: ["/api/admin/users"],
+    queryKey: ['/api/admin/users'],
   });
 
   // Mutation for updating user admin status
   const updateUserAdminMutation = useMutation({
     mutationFn: async ({ userId, isAdmin }: { userId: number, isAdmin: boolean }) => {
-      const res = await apiRequest("PUT", `/api/admin/users/${userId}`, { isAdmin });
+      const res = await apiRequest('PUT', `/api/admin/users/${userId}`, { isAdmin });
       return await res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/users'] });
       toast({
-        title: "User updated",
-        description: "User role has been updated successfully.",
+        title: 'User updated',
+        description: 'User role has been updated successfully.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Update failed",
+        title: 'Update failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -95,52 +94,52 @@ export default function AdminUsers() {
   // Filtered users based on search query and filters
   const filteredUsers = users
     ? users.filter((user: any) => {
-        // Apply search filter
-        if (searchQuery) {
-          const query = searchQuery.toLowerCase();
-          const matchesSearch = 
-            user.username.toLowerCase().includes(query) ||
-            user.email.toLowerCase().includes(query);
-          
-          if (!matchesSearch) return false;
+      // Apply search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const matchesSearch =
+          user.username.toLowerCase().includes(query) ||
+          user.email.toLowerCase().includes(query);
+
+        if (!matchesSearch) return false;
+      }
+
+      // Apply role filter
+      if (roleFilter !== 'all') {
+        const isUserAdmin = user.isAdmin;
+        if ((roleFilter === 'admin' && !isUserAdmin) ||
+          (roleFilter === 'user' && isUserAdmin)) {
+          return false;
         }
-        
-        // Apply role filter
-        if (roleFilter !== "all") {
-          const isUserAdmin = user.isAdmin;
-          if ((roleFilter === "admin" && !isUserAdmin) || 
-              (roleFilter === "user" && isUserAdmin)) {
-            return false;
-          }
-        }
-        
-        // For now we don't have status in our schema, so we'll skip that filter
-        
-        return true;
-      })
+      }
+
+      // For now we don't have status in our schema, so we'll skip that filter
+
+      return true;
+    })
     : [];
 
   // Handle adding a new user
   const handleAddUser = async (values: UserFormValues) => {
     try {
-      await apiRequest("POST", "/api/register", {
+      await apiRequest('POST', '/api/register', {
         ...values,
-        themePreference: "dark",
+        themePreference: 'dark',
       });
 
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/users'] });
       setIsAddUserOpen(false);
       resetForm();
-      
+
       toast({
-        title: "User created",
-        description: "New user has been created successfully.",
+        title: 'User created',
+        description: 'New user has been created successfully.',
       });
     } catch (error: any) {
       toast({
-        title: "Creation failed",
+        title: 'Creation failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -156,13 +155,13 @@ export default function AdminUsers() {
   // Handle deleting a user (not implemented yet)
   const confirmDeleteUser = () => {
     if (!userToDelete) return;
-    
+
     // This would call an API to delete the user
     toast({
-      title: "User deleted",
+      title: 'User deleted',
       description: `User ${userToDelete.username} has been deleted.`,
     });
-    
+
     setIsDeleteDialogOpen(false);
     setUserToDelete(null);
   };
@@ -175,7 +174,7 @@ export default function AdminUsers() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
-      
+
       <Card className="mb-6">
         <CardContent className="pt-6">
           <div className="flex flex-col md:flex-row gap-4 items-center">
@@ -188,7 +187,7 @@ export default function AdminUsers() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            
+
             <div className="flex gap-2">
               <Select value={roleFilter} onValueChange={setRoleFilter}>
                 <SelectTrigger className="w-[130px]">
@@ -200,7 +199,7 @@ export default function AdminUsers() {
                   <SelectItem value="user">User</SelectItem>
                 </SelectContent>
               </Select>
-              
+
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-[130px]">
                   <SelectValue placeholder="Status" />
@@ -211,7 +210,7 @@ export default function AdminUsers() {
                   <SelectItem value="inactive">Inactive</SelectItem>
                 </SelectContent>
               </Select>
-              
+
               <Button onClick={() => setIsAddUserOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" /> Add User
               </Button>
@@ -219,7 +218,7 @@ export default function AdminUsers() {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardHeader>
           <CardTitle>User List</CardTitle>
@@ -259,12 +258,11 @@ export default function AdminUsers() {
                         {user.uuid}
                       </TableCell>
                       <TableCell>
-                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          user.isAdmin 
-                            ? "bg-primary/10 text-primary" 
-                            : "bg-muted text-muted-foreground"
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.isAdmin
+                          ? 'bg-primary/10 text-primary'
+                          : 'bg-muted text-muted-foreground'
                         }`}>
-                          {user.isAdmin ? "Admin" : "User"}
+                          {user.isAdmin ? 'Admin' : 'User'}
                         </div>
                       </TableCell>
                       <TableCell>
@@ -281,9 +279,9 @@ export default function AdminUsers() {
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
+                          <Button
+                            variant="ghost"
+                            size="icon"
                             className="h-8 w-8 text-destructive"
                             onClick={() => {
                               setUserToDelete(user);
@@ -302,7 +300,7 @@ export default function AdminUsers() {
           )}
         </CardContent>
       </Card>
-      
+
       {/* Add User Dialog */}
       <Dialog open={isAddUserOpen} onOpenChange={(open) => {
         setIsAddUserOpen(open);
@@ -327,7 +325,7 @@ export default function AdminUsers() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="email"
@@ -341,7 +339,7 @@ export default function AdminUsers() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="password"
@@ -355,7 +353,7 @@ export default function AdminUsers() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="confirmPassword"
@@ -369,7 +367,7 @@ export default function AdminUsers() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="isAdmin"
@@ -385,11 +383,11 @@ export default function AdminUsers() {
                   </FormItem>
                 )}
               />
-              
+
               <div className="flex justify-end space-x-2 pt-4">
-                <Button 
-                  variant="outline" 
-                  type="button" 
+                <Button
+                  variant="outline"
+                  type="button"
                   onClick={() => setIsAddUserOpen(false)}
                 >
                   Cancel
@@ -400,7 +398,7 @@ export default function AdminUsers() {
           </Form>
         </DialogContent>
       </Dialog>
-      
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
@@ -411,13 +409,13 @@ export default function AdminUsers() {
             <p>Are you sure you want to delete user "{userToDelete?.username}"? This action cannot be undone.</p>
           </div>
           <div className="flex justify-end space-x-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setIsDeleteDialogOpen(false)}
             >
               Cancel
             </Button>
-            <Button 
+            <Button
               variant="destructive"
               onClick={confirmDeleteUser}
             >

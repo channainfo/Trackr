@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AdminSettings() {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("features");
-  
+  const [activeTab, setActiveTab] = useState('features');
+
   // Feature toggle states
   const [featureToggles, setFeatureToggles] = useState({
     portfolioSharing: true,
@@ -21,15 +21,15 @@ export default function AdminSettings() {
     advancedAnalytics: true,
     twoFactorAuth: true,
   });
-  
+
   // Global parameters
   const [globalParams, setGlobalParams] = useState({
-    defaultCurrency: "USD",
-    priceUpdateFrequency: "60",
-    sessionTimeout: "30",
-    maxLoginAttempts: "5",
+    defaultCurrency: 'USD',
+    priceUpdateFrequency: '60',
+    sessionTimeout: '30',
+    maxLoginAttempts: '5',
   });
-  
+
   // System settings
   const [systemSettings, setSystemSettings] = useState({
     maintenanceMode: false,
@@ -37,69 +37,69 @@ export default function AdminSettings() {
     errorReporting: true,
     anonymousMetrics: true,
   });
-  
+
   // Updates a feature toggle
   const updateFeatureToggle = (feature: keyof typeof featureToggles, value: boolean) => {
     setFeatureToggles(prev => ({
       ...prev,
-      [feature]: value
+      [feature]: value,
     }));
   };
-  
+
   // Updates a global parameter
   const updateGlobalParam = (param: keyof typeof globalParams, value: string) => {
     setGlobalParams(prev => ({
       ...prev,
-      [param]: value
+      [param]: value,
     }));
   };
-  
+
   // Updates a system setting
   const updateSystemSetting = (setting: keyof typeof systemSettings, value: boolean) => {
     setSystemSettings(prev => ({
       ...prev,
-      [setting]: value
+      [setting]: value,
     }));
   };
-  
+
   // Save feature toggles
   const saveFeatureToggles = () => {
     // This would save the feature toggles to the server
     toast({
-      title: "Features saved",
-      description: "Feature toggles have been updated.",
+      title: 'Features saved',
+      description: 'Feature toggles have been updated.',
     });
   };
-  
+
   // Save global parameters
   const saveGlobalParams = () => {
     // This would save the global parameters to the server
     toast({
-      title: "Parameters saved",
-      description: "Global parameters have been updated.",
+      title: 'Parameters saved',
+      description: 'Global parameters have been updated.',
     });
   };
-  
+
   // Save system settings
   const saveSystemSettings = () => {
     // This would save the system settings to the server
     toast({
-      title: "Settings saved",
-      description: "System settings have been updated.",
+      title: 'Settings saved',
+      description: 'System settings have been updated.',
     });
   };
 
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">System Settings</h1>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="features">Feature Toggles</TabsTrigger>
           <TabsTrigger value="params">Global Parameters</TabsTrigger>
           <TabsTrigger value="system">System</TabsTrigger>
         </TabsList>
-        
+
         {/* Feature Toggles */}
         <TabsContent value="features">
           <Card>
@@ -124,9 +124,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateFeatureToggle('portfolioSharing', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* API Access */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -140,9 +140,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateFeatureToggle('apiAccess', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* User Registration */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -156,9 +156,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateFeatureToggle('userRegistration', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* Advanced Analytics */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -172,9 +172,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateFeatureToggle('advancedAnalytics', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* Two-Factor Authentication */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -188,7 +188,7 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateFeatureToggle('twoFactorAuth', value)}
                   />
                 </div>
-                
+
                 <div className="pt-4">
                   <Button onClick={saveFeatureToggles}>Save Changes</Button>
                 </div>
@@ -196,7 +196,7 @@ export default function AdminSettings() {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {/* Global Parameters */}
         <TabsContent value="params">
           <Card>
@@ -228,7 +228,7 @@ export default function AdminSettings() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 {/* Price Update Frequency */}
                 <div className="space-y-2">
                   <Label htmlFor="price-update-frequency">Price Update Frequency (seconds)</Label>
@@ -244,7 +244,7 @@ export default function AdminSettings() {
                     How often to update cryptocurrency prices. Minimum 10 seconds.
                   </p>
                 </div>
-                
+
                 {/* Session Timeout */}
                 <div className="space-y-2">
                   <Label htmlFor="session-timeout">Session Timeout (minutes)</Label>
@@ -260,7 +260,7 @@ export default function AdminSettings() {
                     How long before inactive sessions are logged out. Minimum 5 minutes.
                   </p>
                 </div>
-                
+
                 {/* Max Login Attempts */}
                 <div className="space-y-2">
                   <Label htmlFor="max-login-attempts">Max Login Attempts</Label>
@@ -276,7 +276,7 @@ export default function AdminSettings() {
                     Maximum number of failed login attempts before account lockout.
                   </p>
                 </div>
-                
+
                 <div className="pt-4">
                   <Button onClick={saveGlobalParams}>Save Changes</Button>
                 </div>
@@ -284,7 +284,7 @@ export default function AdminSettings() {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {/* System Settings */}
         <TabsContent value="system">
           <Card>
@@ -309,9 +309,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateSystemSetting('maintenanceMode', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* Automatic Backups */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -325,9 +325,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateSystemSetting('automaticBackups', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* Error Reporting */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -341,9 +341,9 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateSystemSetting('errorReporting', value)}
                   />
                 </div>
-                
+
                 <Separator />
-                
+
                 {/* Anonymous Usage Metrics */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -357,18 +357,18 @@ export default function AdminSettings() {
                     onCheckedChange={(value) => updateSystemSetting('anonymousMetrics', value)}
                   />
                 </div>
-                
+
                 <div className="pt-4">
                   <Button onClick={saveSystemSettings}>Save Changes</Button>
                 </div>
-                
+
                 {/* Database Backup */}
                 <div className="pt-6 border-t">
                   <h3 className="text-lg font-medium mb-2">Database Management</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create backups and manage your database.
                   </p>
-                  
+
                   <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                     <Button variant="outline">Create Backup</Button>
                     <Button variant="outline">View Backups</Button>

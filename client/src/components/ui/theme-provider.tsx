@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
 
-type Theme = "dark" | "light" | "system";
+type Theme = 'dark' | 'light' | 'system';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "dark",
+  theme: 'dark',
   setTheme: () => null,
 };
 
@@ -23,8 +23,8 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
-  storageKey = "ui-theme",
+  defaultTheme = 'dark',
+  storageKey = 'ui-theme',
   ...props
 }: ThemeProviderProps) {
   const { user } = useAuth();
@@ -32,13 +32,13 @@ export function ThemeProvider({
 
   useEffect(() => {
     const savedTheme = localStorage.getItem(storageKey) as Theme | null;
-    
+
     // If user is logged in, use their theme preference
     if (user) {
       // Convert from string to Theme type
       const userTheme = user.themePreference === 'dark' ? 'dark' : 'light';
       setTheme(userTheme);
-    } 
+    }
     // Otherwise use saved theme or default
     else if (savedTheme) {
       setTheme(savedTheme);
@@ -50,13 +50,13 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
-    root.classList.remove("light", "dark");
+    root.classList.remove('light', 'dark');
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
         .matches
-        ? "dark"
-        : "light";
+        ? 'dark'
+        : 'light';
 
       root.classList.add(systemTheme);
       return;
@@ -84,7 +84,7 @@ export const useTheme = () => {
   const context = useContext(ThemeProviderContext);
 
   if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
 
   return context;
 };

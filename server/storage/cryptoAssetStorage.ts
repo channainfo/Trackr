@@ -1,7 +1,7 @@
-import { db } from "../db";
-import { cryptoAssetsTable } from "@shared/schema";
-import { CryptoAsset } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { db } from '../db';
+import { cryptoAssetsTable } from '@shared/schema';
+import { CryptoAsset } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
 export class CryptoAssetStorage {
   async getAllCryptoAssets(): Promise<CryptoAsset[]> {

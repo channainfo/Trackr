@@ -1,37 +1,37 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import CryptoIcon from "@/components/crypto-icon";
-import { Search, TrendingUp, Star, StarOff, ArrowDownAZ, ArrowUpAZ, ArrowUpDown } from "lucide-react";
-import { formatCurrency, formatPercentage } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import CryptoIcon from '@/components/crypto-icon';
+import { Search, Star, StarOff, ArrowDownAZ, ArrowUpAZ, ArrowUpDown } from 'lucide-react';
+import { formatCurrency, formatPercentage } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 export default function MarketView() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortField, setSortField] = useState("marketCap");
-  const [sortDirection, setSortDirection] = useState("desc");
-  const [timeframe, setTimeframe] = useState("1d");
-  const [category, setCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState('marketCap');
+  const [sortDirection, setSortDirection] = useState('desc');
+  const [timeframe, setTimeframe] = useState('1d');
+  const [category, setCategory] = useState('all');
   const [favoriteOnly, setFavoriteOnly] = useState(false);
 
   // Query for all crypto assets
   const { data: cryptoAssets, isLoading: isLoadingCryptoAssets } = useQuery({
-    queryKey: ["/api/assets"],
+    queryKey: ['/api/assets'],
   });
 
   // This would fetch real market data from an API
   // For now, we're generating mock data based on the crypto assets
-  const marketData = cryptoAssets?.map((asset, index) => {
+  const marketData = cryptoAssets?.map((asset: any, index: any) => {
     const randomPrice = Math.random() * (index === 0 ? 40000 : index === 1 ? 2000 : 100);
     const randomChange = (Math.random() * 20) - 10; // -10% to +10%
     const randomVolume = Math.random() * 1000000000;
     const randomMarketCap = randomPrice * (Math.random() * 1000000000);
-    
+
     return {
       id: asset.id,
       name: asset.name,
@@ -51,30 +51,30 @@ export default function MarketView() {
       if (favoriteOnly && !asset.isFavorite) {
         return false;
       }
-      
+
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        return asset.name.toLowerCase().includes(query) || 
-               asset.symbol.toLowerCase().includes(query);
+        return asset.name.toLowerCase().includes(query) ||
+          asset.symbol.toLowerCase().includes(query);
       }
-      
+
       return true;
     })
     .sort((a, b) => {
       const factor = sortDirection === 'asc' ? 1 : -1;
-      
+
       switch (sortField) {
-        case 'name':
-          return factor * a.name.localeCompare(b.name);
-        case 'price':
-          return factor * (a.price - b.price);
-        case 'change24h':
-          return factor * (a.change24h - b.change24h);
-        case 'volume24h':
-          return factor * (a.volume24h - b.volume24h);
-        case 'marketCap':
-        default:
-          return factor * (a.marketCap - b.marketCap);
+      case 'name':
+        return factor * a.name.localeCompare(b.name);
+      case 'price':
+        return factor * (a.price - b.price);
+      case 'change24h':
+        return factor * (a.change24h - b.change24h);
+      case 'volume24h':
+        return factor * (a.volume24h - b.volume24h);
+      case 'marketCap':
+      default:
+        return factor * (a.marketCap - b.marketCap);
       }
     });
 
@@ -106,7 +106,7 @@ export default function MarketView() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Market Overview</h1>
-      
+
       {/* Search and Filters */}
       <Card className="mb-6">
         <CardContent className="pt-6">
@@ -120,7 +120,7 @@ export default function MarketView() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            
+
             <div className="flex gap-2">
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="w-[160px]">
@@ -134,7 +134,7 @@ export default function MarketView() {
                   <SelectItem value="layer2">Layer 2</SelectItem>
                 </SelectContent>
               </Select>
-              
+
               <Select value={sortField} onValueChange={setSortField}>
                 <SelectTrigger className="w-[160px]">
                   <SelectValue placeholder="Sort By" />
@@ -147,7 +147,7 @@ export default function MarketView() {
                   <SelectItem value="name">Name</SelectItem>
                 </SelectContent>
               </Select>
-              
+
               <Button
                 variant="outline"
                 size="icon"
@@ -155,9 +155,9 @@ export default function MarketView() {
               >
                 {sortDirection === 'asc' ? <ArrowUpAZ className="h-4 w-4" /> : <ArrowDownAZ className="h-4 w-4" />}
               </Button>
-              
+
               <Button
-                variant={favoriteOnly ? "default" : "outline"}
+                variant={favoriteOnly ? 'default' : 'outline'}
                 size="icon"
                 onClick={() => setFavoriteOnly(!favoriteOnly)}
               >
@@ -167,7 +167,7 @@ export default function MarketView() {
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Trending Section */}
       <h2 className="text-lg font-semibold mb-3">Trending</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -194,9 +194,9 @@ export default function MarketView() {
                 </div>
                 <div className={`price-chart mt-2 ${asset.change24h >= 0 ? 'price-up-chart' : 'price-down-chart'}`}>
                   <svg className={`price-line ${asset.change24h >= 0 ? 'price-up-line' : 'price-down-line'}`} viewBox="0 0 200 100" preserveAspectRatio="none">
-                    <path d={asset.change24h >= 0 ? 
-                      "M0,70 C50,80 70,40 100,30 C130,20 160,50 200,40" : 
-                      "M0,30 C30,60 60,70 100,65 C150,60 180,40 200,50"} 
+                    <path d={asset.change24h >= 0 ?
+                      'M0,70 C50,80 70,40 100,30 C130,20 160,50 200,40' :
+                      'M0,30 C30,60 60,70 100,65 C150,60 180,40 200,50'}
                     />
                   </svg>
                 </div>
@@ -205,11 +205,11 @@ export default function MarketView() {
           ))
         )}
       </div>
-      
+
       {/* Market Data Table */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-3">All Cryptocurrencies</h2>
-        
+
         <Tabs value={timeframe} onValueChange={setTimeframe} className="mb-4">
           <TabsList>
             <TabsTrigger value="1d">24h</TabsTrigger>
@@ -218,7 +218,7 @@ export default function MarketView() {
             <TabsTrigger value="1y">1y</TabsTrigger>
           </TabsList>
         </Tabs>
-        
+
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -242,9 +242,9 @@ export default function MarketView() {
                 </TableHead>
                 <TableHead className="text-right cursor-pointer" onClick={() => handleSort('change24h')}>
                   <div className="flex items-center justify-end">
-                    {timeframe === '1d' ? '24h' : 
-                     timeframe === '7d' ? '7d' : 
-                     timeframe === '30d' ? '30d' : '1y'}
+                    {timeframe === '1d' ? '24h' :
+                      timeframe === '7d' ? '7d' :
+                        timeframe === '30d' ? '30d' : '1y'}
                     {sortField === 'change24h' && (
                       <ArrowUpDown className="ml-2 h-4 w-4" />
                     )}

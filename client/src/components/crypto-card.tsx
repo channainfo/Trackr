@@ -1,7 +1,7 @@
-import { cn, formatCurrency, formatCryptoAmount, formatPercentage } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import CryptoIcon from "./crypto-icon";
-import { TrendingDown, TrendingUp } from "lucide-react";
+import { cn, formatCurrency, formatCryptoAmount, formatPercentage } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import CryptoIcon from './crypto-icon';
+import { TrendingDown, TrendingUp } from 'lucide-react';
 
 interface CryptoCardProps {
   name: string;
@@ -25,7 +25,7 @@ export default function CryptoCard({
   const isPriceUp = priceChange24h >= 0;
 
   return (
-    <Card className={cn("overflow-hidden transition-all hover:shadow-md", className)}>
+    <Card className={cn('overflow-hidden transition-all hover:shadow-md', className)}>
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -39,8 +39,8 @@ export default function CryptoCard({
             <p className="font-medium">{formatCurrency(price)}</p>
             <p
               className={cn(
-                "text-sm flex items-center justify-end",
-                isPriceUp ? "text-green-500" : "text-red-500"
+                'text-sm flex items-center justify-end',
+                isPriceUp ? 'text-green-500' : 'text-red-500',
               )}
             >
               {isPriceUp ? (
@@ -61,8 +61,8 @@ export default function CryptoCard({
           <div className="w-full h-1.5 bg-secondary rounded-full">
             <div
               className={cn(
-                "h-full rounded-full",
-                isPriceUp ? "bg-green-500" : "bg-red-500"
+                'h-full rounded-full',
+                isPriceUp ? 'bg-green-500' : 'bg-red-500',
               )}
               style={{ width: `${Math.min(Math.abs(priceChange24h) * 100, 100)}%` }}
             ></div>

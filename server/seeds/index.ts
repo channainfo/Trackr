@@ -20,10 +20,10 @@ async function main() {
   };
 
   await db.insert(usersTable).values(user);
-  console.log('New user created!')
+  console.log('New user created!');
 
   const records = await db.select().from(usersTable);
-  console.log('Getting all users from the database: ', records)
+  console.log('Getting all users from the database: ', records);
 
   await db
     .update(usersTable)
@@ -31,10 +31,10 @@ async function main() {
       isAdmin: true,
     })
     .where(eq(usersTable.email, user.email));
-  console.log('User info updated!')
+  console.log('User info updated!');
 
   await db.delete(usersTable).where(eq(usersTable.email, user.email));
-  console.log('User deleted!')
+  console.log('User deleted!');
 }
 
 main();

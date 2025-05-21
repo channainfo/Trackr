@@ -1,6 +1,6 @@
-import { useLocation } from "wouter";
-import { Wallet, TrendingUp, LineChart, Settings } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useLocation } from 'wouter';
+import { Wallet, TrendingUp, LineChart, Settings } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface NavItem {
   path: string;
@@ -13,23 +13,23 @@ export default function BottomNav() {
 
   const navItems: NavItem[] = [
     {
-      path: "/",
-      label: "Portfolio",
+      path: '/',
+      label: 'Portfolio',
       icon: <Wallet size={24} />,
     },
     {
-      path: "/market",
-      label: "Market",
+      path: '/market',
+      label: 'Market',
       icon: <TrendingUp size={24} />,
     },
     {
-      path: "/activity",
-      label: "Activity",
+      path: '/activity',
+      label: 'Activity',
       icon: <LineChart size={24} />,
     },
     {
-      path: "/settings",
-      label: "Settings",
+      path: '/settings',
+      label: 'Settings',
       icon: <Settings size={24} />,
     },
   ];
@@ -47,8 +47,8 @@ export default function BottomNav() {
             >
               <div
                 className={cn(
-                  "flex flex-col items-center transition-all duration-200",
-                  isActive ? "text-primary -translate-y-1" : "text-muted-foreground"
+                  'flex flex-col items-center transition-all duration-200',
+                  isActive ? 'text-primary -translate-y-1' : 'text-muted-foreground',
                 )}
               >
                 {item.icon}

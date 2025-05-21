@@ -1,17 +1,17 @@
-import { pgTable, text, serial, uuid, boolean, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
-import { z } from "zod";
+import { pgTable, text, serial, uuid, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 // Users table
-export const usersTable = pgTable("users", {
-  id: serial("id").primaryKey(),
-  uuid: uuid("uuid").notNull().defaultRandom(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
-  isAdmin: boolean("is_admin").notNull().default(false),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  themePreference: text("theme_preference").notNull().default("dark"),
+export const usersTable = pgTable('users', {
+  id: serial('id').primaryKey(),
+  uuid: uuid('uuid').notNull().defaultRandom(),
+  username: text('username').notNull().unique(),
+  email: text('email').notNull().unique(),
+  password: text('password').notNull(),
+  isAdmin: boolean('is_admin').notNull().default(false),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  themePreference: text('theme_preference').notNull().default('dark'),
 });
 
 export const insertUserSchema = createInsertSchema(usersTable)
@@ -20,8 +20,8 @@ export const insertUserSchema = createInsertSchema(usersTable)
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
   });
 
 // Update schema
@@ -38,8 +38,8 @@ export const updateUserSchema = createUpdateSchema(usersTable)
     }
     return true;
   }, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
   });
 
 // Type exports

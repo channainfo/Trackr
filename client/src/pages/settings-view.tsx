@@ -1,60 +1,60 @@
-import { useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
-import { getInitials } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
+import { getInitials } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 const profileFormSchema = z.object({
   username: z.string().min(3, {
-    message: "Username must be at least 3 characters.",
+    message: 'Username must be at least 3 characters.',
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
 });
 
 const appearanceFormSchema = z.object({
-  theme: z.enum(["dark", "light", "system"], {
-    required_error: "Please select a theme.",
+  theme: z.enum(['dark', 'light', 'system'], {
+    required_error: 'Please select a theme.',
   }),
   currency: z.string({
-    required_error: "Please select a display currency.",
+    required_error: 'Please select a display currency.',
   }),
 });
 
 const securityFormSchema = z.object({
   currentPassword: z.string().min(1, {
-    message: "Please enter your current password.",
+    message: 'Please enter your current password.',
   }),
   newPassword: z
     .string()
     .min(8, {
-      message: "Password must be at least 8 characters.",
+      message: 'Password must be at least 8 characters.',
     })
     .regex(/[A-Z]/, {
-      message: "Password must contain at least one uppercase letter.",
+      message: 'Password must contain at least one uppercase letter.',
     })
     .regex(/[0-9]/, {
-      message: "Password must contain at least one number.",
+      message: 'Password must contain at least one number.',
     })
     .regex(/[^A-Za-z0-9]/, {
-      message: "Password must contain at least one special character.",
+      message: 'Password must contain at least one special character.',
     }),
   confirmPassword: z.string(),
 }).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords do not match.",
-  path: ["confirmPassword"],
+  message: 'Passwords do not match.',
+  path: ['confirmPassword'],
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -64,38 +64,38 @@ type SecurityFormValues = z.infer<typeof securityFormSchema>;
 export default function SettingsView() {
   const { user, updateThemeMutation, logoutMutation } = useAuth();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState('profile');
 
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      username: user?.username || "",
-      email: user?.email || "",
+      username: user?.username || '',
+      email: user?.email || '',
     },
   });
 
   const appearanceForm = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues: {
-      theme: (user?.themePreference || "dark") as "dark" | "light" | "system",
-      currency: "USD",
+      theme: (user?.themePreference || 'dark') as 'dark' | 'light' | 'system',
+      currency: 'USD',
     },
   });
 
   const securityForm = useForm<SecurityFormValues>({
     resolver: zodResolver(securityFormSchema),
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     },
   });
 
-  async function onProfileSubmit(data: ProfileFormValues) {
+  async function onProfileSubmit() {
     // This would update the user's profile
     toast({
-      title: "Profile updated",
-      description: "Your profile information has been updated.",
+      title: 'Profile updated',
+      description: 'Your profile information has been updated.',
     });
   }
 
@@ -104,22 +104,22 @@ export default function SettingsView() {
     if (data.theme !== user?.themePreference) {
       updateThemeMutation.mutate({ themePreference: data.theme });
       toast({
-        title: "Appearance updated",
-        description: "Your appearance settings have been updated.",
+        title: 'Appearance updated',
+        description: 'Your appearance settings have been updated.',
       });
     }
   }
 
-  async function onSecuritySubmit(data: SecurityFormValues) {
+  async function onSecuritySubmit(_data: SecurityFormValues) {
     // This would update the user's password
     toast({
-      title: "Password updated",
-      description: "Your password has been updated successfully.",
+      title: 'Password updated',
+      description: 'Your password has been updated successfully.',
     });
     securityForm.reset({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     });
   }
 
@@ -139,8 +139,8 @@ export default function SettingsView() {
     <div>
       <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
-      <Tabs 
-        value={activeTab} 
+      <Tabs
+        value={activeTab}
         onValueChange={setActiveTab}
         className="w-full"
       >
@@ -149,7 +149,7 @@ export default function SettingsView() {
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
           <TabsTrigger value="security">Security</TabsTrigger>
         </TabsList>
-        
+
         {/* Profile Tab */}
         <TabsContent value="profile">
           <Card>
@@ -171,7 +171,7 @@ export default function SettingsView() {
                   </p>
                 </div>
               </div>
-              
+
               <Form {...profileForm}>
                 <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-4">
                   <FormField
@@ -187,7 +187,7 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={profileForm.control}
                     name="email"
@@ -201,14 +201,14 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <Button type="submit">Save Changes</Button>
                 </form>
               </Form>
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {/* Appearance Tab */}
         <TabsContent value="appearance">
           <Card>
@@ -266,7 +266,7 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={appearanceForm.control}
                     name="currency"
@@ -292,14 +292,14 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <Button type="submit">Save Changes</Button>
                 </form>
               </Form>
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {/* Security Tab */}
         <TabsContent value="security">
           <Card>
@@ -325,7 +325,7 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={securityForm.control}
                     name="newPassword"
@@ -342,7 +342,7 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={securityForm.control}
                     name="confirmPassword"
@@ -356,11 +356,11 @@ export default function SettingsView() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <Button type="submit">Update Password</Button>
                 </form>
               </Form>
-              
+
               <div className="border-t pt-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -370,11 +370,11 @@ export default function SettingsView() {
                   <Switch />
                 </div>
               </div>
-              
+
               <div className="border-t pt-6">
                 <h3 className="text-lg font-medium text-destructive mb-2">Danger Zone</h3>
                 <p className="text-muted-foreground text-sm mb-4">Perform critical account actions.</p>
-                
+
                 <div className="flex space-x-4">
                   <Button variant="destructive" onClick={handleLogout}>
                     Log Out

@@ -1,78 +1,74 @@
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import Header from "@/components/layout/header";
-import { 
-  CheckCircle, 
-  ArrowRight, 
-  Wallet, 
-  LineChart, 
-  Shield, 
-  ChevronDown, 
-  ChevronUp, 
-  ExternalLink,
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import Header from '@/components/layout/header';
+import {
+  ArrowRight,
+  Wallet,
+  LineChart,
+  Shield,
   Github,
   Twitter,
-  Mail
-} from "lucide-react";
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+  Mail,
+} from 'lucide-react';
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export default function LandingPage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  
+
   const features = [
     {
-      title: "Real-Time Tracking",
-      description: "Monitor your portfolio with live price updates and alerts.",
+      title: 'Real-Time Tracking',
+      description: 'Monitor your portfolio with live price updates and alerts.',
       icon: <Wallet className="h-10 w-10" />,
     },
     {
-      title: "Advanced Analytics",
-      description: "Get detailed insights into your portfolio performance.",
+      title: 'Advanced Analytics',
+      description: 'Get detailed insights into your portfolio performance.',
       icon: <LineChart className="h-10 w-10" />,
     },
     {
-      title: "Bank-Grade Security",
-      description: "Your data is encrypted and never shared with third parties.",
+      title: 'Bank-Grade Security',
+      description: 'Your data is encrypted and never shared with third parties.',
       icon: <Shield className="h-10 w-10" />,
     },
   ];
 
   const testimonials = [
     {
-      content: "CryptoFolio has completely changed how I manage my crypto investments. The interface is intuitive and the analytics are powerful.",
-      author: "Alex Johnson",
-      role: "Crypto Trader",
+      content: 'CryptoFolio has completely changed how I manage my crypto investments. The interface is intuitive and the analytics are powerful.',
+      author: 'Alex Johnson',
+      role: 'Crypto Trader',
     },
     {
-      content: "As a beginner in crypto, this app has been a lifesaver. It helps me understand my portfolio distribution and track performance easily.",
-      author: "Sarah Rodriguez",
-      role: "New Investor",
+      content: 'As a beginner in crypto, this app has been a lifesaver. It helps me understand my portfolio distribution and track performance easily.',
+      author: 'Sarah Rodriguez',
+      role: 'New Investor',
     },
     {
-      content: "The real-time alerts and analytics have helped me make better decisions and grow my investments significantly.",
-      author: "Michael Chen",
-      role: "Long-term Investor",
+      content: 'The real-time alerts and analytics have helped me make better decisions and grow my investments significantly.',
+      author: 'Michael Chen',
+      role: 'Long-term Investor',
     },
   ];
 
   const faqs = [
     {
-      question: "Is CryptoFolio free to use?",
-      answer: "Yes, CryptoFolio is completely free for basic portfolio tracking. We also offer premium features for advanced users and teams.",
+      question: 'Is CryptoFolio free to use?',
+      answer: 'Yes, CryptoFolio is completely free for basic portfolio tracking. We also offer premium features for advanced users and teams.',
     },
     {
-      question: "How secure is my data?",
-      answer: "We use industry-standard encryption and security practices. Your data is encrypted both in transit and at rest, and we never share your information with third parties.",
+      question: 'How secure is my data?',
+      answer: 'We use industry-standard encryption and security practices. Your data is encrypted both in transit and at rest, and we never share your information with third parties.',
     },
     {
-      question: "Do I need to connect my wallet?",
+      question: 'Do I need to connect my wallet?',
       answer: "No, you don't need to connect any wallets. You can simply enter the cryptocurrencies you own and their amounts manually, and we'll track their value over time.",
     },
     {
-      question: "Which cryptocurrencies are supported?",
-      answer: "CryptoFolio supports over 5,000 cryptocurrencies and tokens, including all major assets like Bitcoin, Ethereum, and popular altcoins.",
+      question: 'Which cryptocurrencies are supported?',
+      answer: 'CryptoFolio supports over 5,000 cryptocurrencies and tokens, including all major assets like Bitcoin, Ethereum, and popular altcoins.',
     },
   ];
 
@@ -103,10 +99,10 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="md:w-1/2 flex justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-4.0.3&auto=format&fit=crop&w=600" 
-                alt="CryptoFolio app on smartphone" 
-                className="rounded-xl shadow-2xl max-w-sm border-4 border-background" 
+              <img
+                src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-4.0.3&auto=format&fit=crop&w=600"
+                alt="CryptoFolio app on smartphone"
+                className="rounded-xl shadow-2xl max-w-sm border-4 border-background"
               />
             </div>
           </div>
@@ -139,9 +135,9 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
           <div className="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-4">
             {[
-              { step: 1, title: "Create Account", description: "Sign up in seconds with just a username and password." },
-              { step: 2, title: "Add Assets", description: "Easily add your cryptocurrency holdings." },
-              { step: 3, title: "Track Performance", description: "Monitor your portfolio growth in real-time." },
+              { step: 1, title: 'Create Account', description: 'Sign up in seconds with just a username and password.' },
+              { step: 2, title: 'Add Assets', description: 'Easily add your cryptocurrency holdings.' },
+              { step: 3, title: 'Track Performance', description: 'Monitor your portfolio growth in real-time.' },
             ].map((step, index) => (
               <div key={index} className="flex flex-col items-center text-center w-full md:w-1/3">
                 <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-4 text-primary-foreground font-bold text-xl">
@@ -159,7 +155,7 @@ export default function LandingPage() {
       <section className="py-16 bg-muted/50 dark:bg-muted/10">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
-          
+
           <div className="max-w-3xl mx-auto">
             <Card className="border-0 shadow-md">
               <CardContent className="p-8">
@@ -174,10 +170,9 @@ export default function LandingPage() {
                       <button
                         key={index}
                         onClick={() => setActiveTestimonial(index)}
-                        className={`w-2.5 h-2.5 rounded-full ${
-                          index === activeTestimonial
-                            ? "bg-primary"
-                            : "bg-muted-foreground/30"
+                        className={`w-2.5 h-2.5 rounded-full ${index === activeTestimonial
+                          ? 'bg-primary'
+                          : 'bg-muted-foreground/30'
                         }`}
                         aria-label={`View testimonial ${index + 1}`}
                       />
@@ -194,7 +189,7 @@ export default function LandingPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          
+
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
@@ -232,7 +227,7 @@ export default function LandingPage() {
                 </Button>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2">
@@ -242,7 +237,7 @@ export default function LandingPage() {
                 <li><Link href="#" className="text-muted-foreground hover:text-foreground">FAQ</Link></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
@@ -252,7 +247,7 @@ export default function LandingPage() {
                 <li><Link href="#" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2">
@@ -262,7 +257,7 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
             <p>© {new Date().getFullYear()} CryptoFolio. All rights reserved.</p>
           </div>

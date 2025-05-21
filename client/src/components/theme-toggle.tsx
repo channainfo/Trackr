@@ -1,22 +1,22 @@
-import { useTheme } from "@/components/ui/theme-provider";
-import { Button } from "@/components/ui/button";
-import { Moon, Sun } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from '@/components/ui/theme-provider';
+import { Button } from '@/components/ui/button';
+import { Moon, Sun } from 'lucide-react';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const { user, updateThemeMutation } = useAuth();
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    
+
     // If user is logged in, update their theme preference in the database
     if (user) {
       updateThemeMutation.mutate({ themePreference: newTheme });
     }
   };
-  
+
   return (
     <Button
       variant="ghost"

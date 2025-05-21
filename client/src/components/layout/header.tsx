@@ -1,11 +1,11 @@
-import { useAuth } from "@/hooks/use-auth";
-import ThemeToggle from "@/components/theme-toggle";
-import { useLocation } from "wouter";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { getInitials } from "@/lib/utils";
-import { Wallet, Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
+import { useAuth } from '@/hooks/use-auth';
+import ThemeToggle from '@/components/theme-toggle';
+import { useLocation } from 'wouter';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { getInitials } from '@/lib/utils';
+import { Wallet, Bell, ChevronDown, LogOut, Settings, User } from 'lucide-react';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -21,11 +21,11 @@ export default function Header({ showBackButton, onBack }: HeaderProps) {
   };
 
   const navigateToSettings = () => {
-    setLocation("/settings");
+    setLocation('/settings');
   };
 
   const navigateToUserProfile = () => {
-    setLocation("/profile");
+    setLocation('/profile');
   };
 
   return (
@@ -50,7 +50,7 @@ export default function Header({ showBackButton, onBack }: HeaderProps) {
               </svg>
             </Button>
           )}
-          <div onClick={() => setLocation("/")} className="flex cursor-pointer items-center">
+          <div onClick={() => setLocation('/')} className="flex cursor-pointer items-center">
             <Wallet className="h-6 w-6 text-primary" />
             <span className="ml-2 font-bold text-xl">CryptoFolio</span>
           </div>
@@ -96,7 +96,7 @@ export default function Header({ showBackButton, onBack }: HeaderProps) {
                     <span>Settings</span>
                   </DropdownMenuItem>
                   {user.isAdmin && (
-                    <DropdownMenuItem onClick={() => setLocation("/admin")}>
+                    <DropdownMenuItem onClick={() => setLocation('/admin')}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -130,10 +130,10 @@ export default function Header({ showBackButton, onBack }: HeaderProps) {
             </div>
           ) : (
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setLocation("/login")}>
+              <Button variant="outline" onClick={() => setLocation('/login')}>
                 Login
               </Button>
-              <Button onClick={() => setLocation("/register")}>
+              <Button onClick={() => setLocation('/register')}>
                 Sign Up
               </Button>
             </div>

@@ -1,7 +1,7 @@
-import { db } from "../db";
-import { portfoliosTable } from "@shared/schema";
-import { InsertPortfolio, Portfolio } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { db } from '../db';
+import { portfoliosTable } from '@shared/schema';
+import { InsertPortfolio, Portfolio } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
 export class PortfolioStorage {
   async getUserPortfolios(userId: number): Promise<Portfolio[]> {
