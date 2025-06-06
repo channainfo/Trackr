@@ -35,6 +35,12 @@ export default function LandingPage() {
     },
   ];
 
+  const howItWorks = [
+    { step: 1, title: 'Create Account', description: 'Sign up in seconds with just a username and password.' },
+    { step: 2, title: 'Add Assets', description: 'Easily add your cryptocurrency holdings.' },
+    { step: 3, title: 'Track Performance', description: 'Monitor your portfolio growth in real-time.' },
+  ]
+
   const testimonials = [
     {
       content: 'CryptoFolio has completely changed how I manage my crypto investments. The interface is intuitive and the analytics are powerful.',
@@ -134,11 +140,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
           <div className="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-4">
-            {[
-              { step: 1, title: 'Create Account', description: 'Sign up in seconds with just a username and password.' },
-              { step: 2, title: 'Add Assets', description: 'Easily add your cryptocurrency holdings.' },
-              { step: 3, title: 'Track Performance', description: 'Monitor your portfolio growth in real-time.' },
-            ].map((step, index) => (
+            {howItWorks.map((step, index) => (
               <div key={index} className="flex flex-col items-center text-center w-full md:w-1/3">
                 <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-4 text-primary-foreground font-bold text-xl">
                   {step.step}
@@ -173,7 +175,7 @@ export default function LandingPage() {
                         className={`w-2.5 h-2.5 rounded-full ${index === activeTestimonial
                           ? 'bg-primary'
                           : 'bg-muted-foreground/30'
-                        }`}
+                          }`}
                         aria-label={`View testimonial ${index + 1}`}
                       />
                     ))}

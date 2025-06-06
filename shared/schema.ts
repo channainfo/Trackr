@@ -4,3 +4,4 @@ export * from './tables/portfoliosTable';
 export * from './tables/portfolioAssetsTable';
 export * from './tables/transactionsTable';
 export * from './tables/activityLogsTable';
+export * from './tables/resetTokensTable';
